@@ -23,7 +23,8 @@ public enum StaticGuiItems {
             whoClicked.closeInventory();
             whoClicked.playSound(whoClicked.getLocation(), Sound.BLOCK_COPPER_DOOR_CLOSE, .5f, 1f);
         }, 1L);
-    });
+    }),
+    GO_BACK("&cZpět", HeadType.OAK_WOOD_ARROW_LEFT.getHead(), null);
 
     private final String name;
     private final ItemStack icon;
@@ -36,6 +37,6 @@ public enum StaticGuiItems {
     }
 
     public GuiButton getButton() {
-        return new GuiButton(this.getIcon()).setName(this.getName()).withListener(this.getOnClick());
+        return new GuiButton(this.getIcon()).setName(this.getName()).withListener(this.getOnClick() != null ? this.getOnClick() : (e) -> {});
     }
 }

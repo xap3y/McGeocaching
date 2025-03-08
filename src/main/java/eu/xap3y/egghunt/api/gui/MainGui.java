@@ -3,6 +3,7 @@ package eu.xap3y.egghunt.api.gui;
 import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.enums.GuiType;
 import eu.xap3y.egghunt.api.enums.HeadType;
+import eu.xap3y.egghunt.api.enums.StaticGuiItems;
 import eu.xap3y.xagui.VirtualMenu;
 import eu.xap3y.xagui.interfaces.GuiButtonInterface;
 import eu.xap3y.xagui.interfaces.GuiInterface;

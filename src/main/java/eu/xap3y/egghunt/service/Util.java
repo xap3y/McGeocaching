@@ -2,8 +2,10 @@ package eu.xap3y.egghunt.service;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
+import eu.xap3y.egghunt.EggHunt;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -24,5 +26,13 @@ public class Util {
         });
 
         return head;
+    }
+
+    public static NamespacedKey getNamespacedKey() {
+        return new NamespacedKey(EggHunt.getInstance(), "egghunt");
+    }
+
+    public static NamespacedKey getNamespacedKeyTexture() {
+        return new NamespacedKey(EggHunt.getInstance(), "egghunttexture");
     }
 }

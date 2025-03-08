@@ -2,17 +2,24 @@ package eu.xap3y.egghunt;
 
 import com.github.fierioziy.particlenativeapi.api.ParticleNativeAPI;
 import com.github.fierioziy.particlenativeapi.core.ParticleNativeCore;
+import eu.xap3y.egghunt.api.dto.EggDto;
 import eu.xap3y.egghunt.api.enums.GuiType;
 import eu.xap3y.egghunt.api.enums.StaticGuiItems;
 import eu.xap3y.egghunt.api.gui.MainGui;
-import eu.xap3y.egghunt.commands.DevCommand;
-import eu.xap3y.egghunt.commands.RootCommand;
+import eu.xap3y.egghunt.command.DevCommand;
+import eu.xap3y.egghunt.command.RootCommand;
+import eu.xap3y.egghunt.listener.BlockListener;
+import eu.xap3y.egghunt.listener.PlayerListener;
 import eu.xap3y.egghunt.manager.CommandManager;
 import eu.xap3y.egghunt.manager.ConfigManager;
+import eu.xap3y.egghunt.service.ParticleService;
 import eu.xap3y.egghunt.service.Texter;
 import eu.xap3y.xagui.GuiRegistry;
 import eu.xap3y.xagui.XaGui;
 import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EggHunt extends JavaPlugin {
@@ -21,6 +28,7 @@ public final class EggHunt extends JavaPlugin {
     private static EggHunt instance;
 
     @Getter
+    @Setter
     private static Texter texter;
 
     @Getter
@@ -32,11 +40,12 @@ public final class EggHunt extends JavaPlugin {
     @Getter
     private static final GuiRegistry<GuiType> virtualGuiRegistry = new GuiRegistry<GuiType>();
 
+    @Getter
+    private static final ParticleService particleService = new ParticleService();
+
     @Override
     public void onEnable() {
         instance = this;
-
-        ConfigManager.reloadConfig();
 
         xagui = new XaGui(this);
 
@@ -46,10 +55,10 @@ public final class EggHunt extends JavaPlugin {
 
         virtualGuiRegistry.register(GuiType.MAIN, new MainGui(), Boolean.class);
         virtualGuiRegistry.register(GuiType.EGG_HUNT, new eu.xap3y.egghunt.api.gui.EggHunt(), Boolean.class);
+        virtualGuiRegistry.register(GuiType.EGG_VIEW, new eu.xap3y.egghunt.api.gui.EggView(), EggDto.class);
 
-        String prefix = getConfig().getString("prefix");
-        if (prefix == null) prefix = "&7[&bEggHunt&7] &r";
-        texter = new Texter(prefix, false, null);
+        ConfigManager.reloadConfig();
+        ConfigManager.reloadStorage();
 
         CommandManager cmdManager = new CommandManager(this);
         cmdManager.parse(new RootCommand());
@@ -61,25 +70,27 @@ public final class EggHunt extends JavaPlugin {
 
         //   Registering listeners  \\
 
-        /*PluginManager manager = getServer().getPluginManager();
-        registerListeners(manager);*/
+        PluginManager manager = getServer().getPluginManager();
+        registerListeners(manager);
 
         //  Registering PlaceholderAPI  \\
         //registerPapi();
 
         // Get current mc version as x.x.x
+        particleService.init();
     }
 
-    /*private static void registerListeners(PluginManager manager) {
+    private static void registerListeners(PluginManager manager) {
         //  Registering listeners  \\
         Listener[] listeners = new Listener[]{
-
+            new BlockListener(),
+            new PlayerListener()
         };
 
         for (Listener listener : listeners) {
-            manager.registerEvents(listener, INSTANCE);
+            manager.registerEvents(listener, EggHunt.getInstance());
         }
-    }*/
+    }
 
     /*private void registerPapi() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
