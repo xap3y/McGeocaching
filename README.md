@@ -24,7 +24,7 @@ curl -fsSL https://static.xap3y.tech/install.sh | bash
 <summary> <b>List of features implemented in this project: </b></summary>
 
 - [x] [Paper API 1.20.4](https://jd.papermc.io/paper/1.20.4/)
-- [x] [XaLib](https://xalib.xap3y.eu/)
+- [ ] [XaLib](https://xalib.xap3y.eu/)
 - [x] [XaGUI](https://xagui.xap3y.eu/docs)
 - [x] [SkullCreator](https://skullcreator.xap3y.eu)
 - [x] [Cloud V2](https://cloud.incendo.org/minecraft/paper/)
