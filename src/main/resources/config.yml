@@ -1,3 +1,22 @@
-
+#
 prefix: "&7[&bEggHunt&7] &r"
+
 debug: false
+
+# Pokud je false, nebude možné najít vajíčka
+enabled: true
+
+# Pokud je true, hráč dostane odměnu za nalezení všech vajíček
+all_eggs_found_reward: false
+
+# Náhodná odměna za nalezení všech vajíček
+all_eggs_found_random_reward: false
+
+# Odměny za nalezení všech vajíček
+all_eggs_found_rewards:
+    - "minecraft:me &aHráč %player% našel všechna vejce!"
+    - "give %player% diamond 1"
+
+# Zpráva, která se zobrazí, když hráč najde všechna vajíčka
+# Nastav na "" pro vypnutí zprávy
+all_eggs_found_message: "&aGratulujeme! Našel jsi všechna vejce!"

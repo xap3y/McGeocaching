@@ -15,6 +15,7 @@ public class EggStorageDto {
     private List<EggLocationDto> locations;
     private Map<String, String> textures;
 
+
     public EggStorageDto() {
         this.eggs = new HashMap<String, EggDto>();
         this.locations = new ArrayList<EggLocationDto>();

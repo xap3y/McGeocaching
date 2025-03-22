@@ -2,18 +2,16 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'io.freefair.lombok' version '8.7.1'
     id 'java'
-    //id "net.kyori.blossom" version "1.3.1"
+    id "net.kyori.blossom" version "1.3.1"
 }
 
 group = 'eu.xap3y'
 version = '1.0'
 def baseCoordinates = "EggHunt"
 
-// OPTIONAL
-/*blossom {
+blossom {
     replaceToken("@VERSION@", version)
-    replaceToken("@MAIN@", mainClass)
-}*/
+}
 
 repositories {
     mavenCentral()
@@ -35,51 +33,15 @@ repositories {
     maven {
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
-
-
-    /*maven {
-        name = "spigot-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }*/
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
     implementation 'org.incendo:cloud-annotations:2.0.0'
     implementation 'org.incendo:cloud-paper:2.0.0-beta.10'
-
-
-    /*
-        OPTIONAL ( Dont forget to shadow them after enabling )
-     */
-
-    implementation 'eu.xap3y:xagui:1.2-beta.3'
-    //implementation 'net.wesjd:anvilgui:1.10.1-SNAPSHOT'
-    //implementation 'com.github.xap3y:skullcreator:ccdc446'
-    //implementation 'com.github.cryptomorin:XSeries:13.0.0'
+    implementation 'eu.xap3y:xagui:1.2-beta.4'
     implementation 'com.github.fierioziy.particlenativeapi:ParticleNativeAPI-core:4.4.0'
-    //implementation 'org.bstats:bstats-bukkit:3.1.0'
-
-    // No need to shadow these:
-
-    //implementation 'com.google.code.gson:gson:2.12.2'
-    //implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.2'
-    //compileOnly "de.tr7zw:item-nbt-api-plugin:2.14.1"
-    compileOnly 'me.clip:placeholderapi:2.11.6'
-    //compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.10'
-    //compileOnly 'com.github.TownyAdvanced:Towny:0.100.3.0'
-    //compileOnly 'com.github.Slimefun:Slimefun4:RC-37'
-    //compileOnly 'com.github.SkriptLang:Skript:2.9.2'
-    //compileOnly 'org.apache.logging.log4j:log4j-core:2.23.1'
-    //compileOnly 'net.luckperms:api:5.4'
-    //compileOnly 'com.github.TechFortress:GriefPrevention:16.18.4'
-    //compileOnly 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
-
-    // JUnit and MockBukkit
-    /*testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.20:3.9.0'*/
-
+    //compileOnly 'me.clip:placeholderapi:2.11.6'
 }
 
 def targetJavaVersion = 17
@@ -123,34 +85,5 @@ tasks {
         archiveClassifier.set('')
         archiveBaseName.set(baseCoordinates)
         //relocate 'eu.xap3y.xagui', "${group}.${baseCoordinates.toLowerCase()}.util.xagui"
-
-        //relocate 'org.bstats', "${group}.${baseCoordinates.toLowerCase()}.util.bstats"
-        /*relocate 'com.github.fierioziy.particlenativeapi', "${group}.${baseCoordinates.toLowerCase()}.util.particlenativeapi"
-        relocate 'eu.xap3y.skullcreator', "${group}.${baseCoordinates.toLowerCase()}.util.skull"
-        relocate 'com.cryptomorin.xseries', "${group}.${baseCoordinates.toLowerCase()}.util.xseries"
-        relocate 'net.wesjd.anvilgui', "${group}.${baseCoordinates.toLowerCase()}.util.anvilgui"*/
     }
 }
-
-// Example task to upload the plugin to a server
-// Also uncomment line 126 to enable it
-/*tasks.register('copyToServer', Copy) {
-    from shadowJar.archiveFile
-    into "${layout.buildDirectory.get()}/../server/plugins"
-}*/
-
-//example file structure:
-//root
-//  - build.gradle
-//  - src
-//    - main
-//      - java
-//        - eu
-//          - xap3y
-//            - TemplateBukkitGradle
-//              - TemplateBukkitGradle.java
-//      - resources
-//        - plugin.yml
-//  - server
-//    - plugins
-//      - TemplateBukkitGradle.jar

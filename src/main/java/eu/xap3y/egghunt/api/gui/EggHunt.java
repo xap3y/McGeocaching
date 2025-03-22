@@ -10,16 +10,17 @@ import eu.xap3y.xagui.interfaces.GuiButtonInterface;
 import eu.xap3y.xagui.interfaces.GuiInterface;
 import eu.xap3y.xagui.models.GuiButton;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class EggHunt extends VirtualMenu<Boolean> {
 
     public EggHunt() {
-        super("Test", 5, eu.xap3y.egghunt.EggHunt.getXagui());
+        super("&b&lEgg Hunt", 5, eu.xap3y.egghunt.EggHunt.getXagui());
     }
 
     @Override
@@ -29,10 +30,11 @@ public class EggHunt extends VirtualMenu<Boolean> {
         gui.fillBorder();
         gui.addCloseButton();
 
-        Integer[] freeSlots = {10, 11, 12, 13, 14, 15, 16, 19, 20, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43};
+        Integer[] freeSlots = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43};
 
         EggStorageDto eggStorageDto = ConfigManager.getEggStorageDto();
 
+        int i = 0;
         for (Map.Entry<String, EggDto> egg : eggStorageDto.getEggs().entrySet()) {
             if (egg.getValue() == null) continue;
 
@@ -44,17 +46,47 @@ public class EggHunt extends VirtualMenu<Boolean> {
             } else {
                 eggButton.setLore(" ", "&eKlikni pro zobrazení")
                     .withListener((e) -> {
-                        eu.xap3y.egghunt.EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_VIEW, (org.bukkit.entity.Player) e.getWhoClicked(), egg.getValue(), EggDto.class);
+                        Player player = (Player) e.getWhoClicked();
+                        player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, .8f, 1.0f);
+                        //eu.xap3y.egghunt.EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_VIEW, player, egg.getValue(), EggDto.class);
+                        new EggView().build(egg.getValue()).open(player);
                     });
             }
 
-            gui.setSlot(freeSlots[0], eggButton);
-            freeSlots[0]++;
+            gui.setSlot(freeSlots[i], eggButton);
+            i++;
         }
 
         gui.setSlot(36, StaticGuiItems.GO_BACK.getButton().clone().withListener((e) -> {
-            eu.xap3y.egghunt.EggHunt.getVirtualGuiRegistry().invoke(GuiType.MAIN, (org.bukkit.entity.Player) e.getWhoClicked(), null, Boolean.class);
+            Player player = (Player) e.getWhoClicked();
+            player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
+            eu.xap3y.egghunt.EggHunt.getVirtualGuiRegistry().invoke(GuiType.MAIN, player, null, Boolean.class);
         }));
+
+        GuiButton catalog = new GuiButton(Material.PAPER).setName("&3&lPoložená vajíčka")
+                .setLore(" ", " &3➥ &fPočet vajíček na nalezení: &e" + ConfigManager.getEggStorageDto().getLocations().size(), "", "&eKlikni pro zobrazení")
+                .withListener((e) -> {
+                    Player player = (Player) e.getWhoClicked();
+                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, .8f, 1.0f);
+                    //eu.xap3y.egghunt.EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_HUNT, player, true, Boolean.class);
+                    new PlacedEggsView().build(null).open(player);
+                });
+
+        gui.setSlot(43, catalog);
+
+        //45
+        GuiButton reload = new GuiButton(Material.GUNPOWDER).setName("&c&lReload")
+                .setLore(" ", "&eKlikni pro znovunačtení konfigurace")
+                .withListener((e) -> {
+                    Player player = (Player) e.getWhoClicked();
+                    player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
+                    ConfigManager.reloadConfig();
+                    ConfigManager.reloadStorage();
+                    eu.xap3y.egghunt.EggHunt.getTexter().response(player, "&aKonfigurace byla znovunačtena");
+                });
+
+        gui.setSlot(44, reload);
 
         return gui;
     }

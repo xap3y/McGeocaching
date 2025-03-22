@@ -16,4 +16,7 @@ public class ConfigDb {
         put(EggAnimationType.SPIRAL, new SpiralEggAnimation());
         put(EggAnimationType.REVEAL, new RevealEggAnimation());
     }};
+
+    @Getter
+    private static final String onlyPlayers = "&cJenom hráči mohou používat tento příkaz.";
 }

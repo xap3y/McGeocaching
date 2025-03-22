@@ -32,7 +32,7 @@ public class ParticleService {
                 }
 
                 Collection<Player> players = locPlayers.get(loc);
-                if (players.isEmpty()) {
+                if (players == null || players.isEmpty()) {
                     continue;
                 }
 

@@ -3,11 +3,11 @@ package eu.xap3y.egghunt.api.gui;
 import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.enums.GuiType;
 import eu.xap3y.egghunt.api.enums.HeadType;
-import eu.xap3y.egghunt.api.enums.StaticGuiItems;
 import eu.xap3y.xagui.VirtualMenu;
 import eu.xap3y.xagui.interfaces.GuiButtonInterface;
 import eu.xap3y.xagui.interfaces.GuiInterface;
 import eu.xap3y.xagui.models.GuiButton;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,10 +29,12 @@ public class MainGui extends VirtualMenu<Boolean> {
                 .setName("&6Egg Hunt")
                 .setLore(" ", "&eKlikni pro zobrazení")
                 .withListener((e) -> {
-                    EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_HUNT, (Player) e.getWhoClicked(), null, Boolean.class);
+                    Player player = (Player) e.getWhoClicked();
+                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, .8f, 1.0f);
+                    EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_HUNT, player, null, Boolean.class);
                 });
 
-        GuiButtonInterface unknown = new GuiButton(HeadType.UNKNOWN.getHead()).setName("&7Brzy...");
+        GuiButtonInterface unknown = new GuiButton(HeadType.UNKNOWN.getHead()).setName("&7Geocaching").withClickSound(Sound.ENTITY_VILLAGER_NO);
 
         gui.setSlot(21, eggHunt);
         gui.setSlot(23, unknown);

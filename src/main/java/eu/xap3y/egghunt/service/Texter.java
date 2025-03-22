@@ -3,9 +3,14 @@ package eu.xap3y.egghunt.service;
 import eu.xap3y.egghunt.api.dto.TextModifierDto;
 import eu.xap3y.egghunt.api.dto.TexterObjDto;
 import eu.xap3y.egghunt.api.enums.DefaultFontInfo;
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentBuilder;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,8 +19,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 
+import static net.kyori.adventure.text.Component.text;
+
 @SuppressWarnings({"deprecation", "ResultOfMethodCallIgnored"})
 public class Texter {
+
+    @Getter
     private final TexterObjDto data;
 
     public Texter(TexterObjDto data) {
@@ -34,6 +43,12 @@ public class Texter {
 
     public void response(CommandSender p0, String text) {
         response(p0, text, new TextModifierDto(true, true));
+    }
+
+    public void response(Player p0, Component... comps) {
+        Component prefix = text(this.getData().getPrefix().replaceAll("&", "§"));
+        ComponentBuilder<TextComponent, TextComponent.Builder> builder = Component.text().append(prefix).append(comps);
+        p0.sendMessage(builder.build());
     }
 
     public void console(String text, TextModifierDto modifiers) {

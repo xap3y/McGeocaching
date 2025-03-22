@@ -1,51 +1,116 @@
 
+
+# Možné hodnoty pro animace: spiral, reveal, none
+
 egg-hunt:
-    eggs:
-        list:
-            - name: "Egg-1"
+    list:
+        - name: Egg-1
+          random-reward: false
+          rewards:
+              - give %player% diamond 1
+              - me &a%player% found the first egg!
+          animation: spiral
+          textures:
+              - 'R:.*'
+              - '!R:^mar_.*'
+        - name: Egg-2
+          random-reward: false
+          rewards:
+              - give %player% emerald 1
+              - me &a%player% nasel vejce 2!
+          animation: reveal
+          textures:
+              - yellow_egg
+              - orange_egg
+              - cyan_egg
+              - lime_egg
+              - green_egg
+              - pink_egg
+              - white_egg
+              - brown_egg
+        - name: Egg-3
+          random-reward: false
+          rewards:
+              - give %player% emerald 1
+              - me &a%player% nasel vejce 3!
+          animation: reveal
+          textures:
+              - 'R:^mar_.*'
 
-              # Pokud je true, tak se vybere náhodná odměna z rewards sekce
-              random-reward: false
-
-              rewards:
-                - "give %player% diamond 1"
-                - "broadcast &a%player% nasel vajicko!"
-
-              # Animace po nalezení vejce
-              animation: "spiral"
-
-              # Textury ktery jsou nadefinovane níže (egg-hunt.textures)
-              textures:
-                  - "yellow_egg"
-                  - "cyan_egg"
-                  - "orange_egg"
-
-            - name: "Egg-2"
-              random-reward: false
-              rewards:
-                  - "give %player% emerald 1"
-                  - "broadcast &a%player% nasel vejce 2!"
-
-              animation: "reveal"
-              textures:
-                - "ALL" # Všechny textury
-
-
+    # https://minecraft-heads.com/custom-heads/tag/easter-egg
     textures:
-        yellow_egg: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWJmNjI5OWM5ODcwOWZlN2NlZDhiOTVhNzE5MjUxYjE3Zjc1ZDQ2NDg5Zjk0ODA5NTA5NTU2MWMyMzVmOTcwZSJ9fX0="
-                    # ^ https://minecraft-heads.com/custom-heads/head/35430-easter-egg ^
 
-        cyan_egg: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM3MDQwNmU3NTM5NDIxMzU0MjRiYjk5NjkyYjc0NGM5YTAzNDVkM2YzYzgxOTNlOWQ4ZTMwZDU0NDEyMThlMyJ9fX0="
-                    # ^ https://minecraft-heads.com/custom-heads/head/25183-easter-egg-cyan ^
+        yellow_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWJmNjI5OWM5ODcwOWZlN2NlZDhiOTVhNzE5MjUxYjE3Zjc1ZDQ2NDg5Zjk0ODA5NTA5NTU2MWMyMzVmOTcwZSJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/35430-easter-egg
 
-        orange_egg: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWQ3MGU1OGNjMTNlMzk4YTIyMTU3NTU2YTkzODI3MzY5YmI3ZjQwMjIwYmQ3ZDg0ZTc3YmQzNWIwNzc0ZGZlIn19fQ=="
-                    # ^ https://minecraft-heads.com/custom-heads/head/25182-easter-egg-orange ^
+        cyan_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM3MDQwNmU3NTM5NDIxMzU0MjRiYjk5NjkyYjc0NGM5YTAzNDVkM2YzYzgxOTNlOWQ4ZTMwZDU0NDEyMThlMyJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/25183-easter-egg-cyan
 
-        lime_egg: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDdmODUxOWNjNWE2MjQzZDg1ODk0OWE2YzU3MzlkY2U4NWE3NjE5YWQwZTcxYzUzNzAxYzgwZDQ3NjA0NmEwMCJ9fX0="
-                    # ^ https://minecraft-heads.com/custom-heads/head/25181-easter-egg-lime ^
+        orange_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWQ3MGU1OGNjMTNlMzk4YTIyMTU3NTU2YTkzODI3MzY5YmI3ZjQwMjIwYmQ3ZDg0ZTc3YmQzNWIwNzc0ZGZlIn19fQ==
+        # ^ https://minecraft-heads.com/custom-heads/head/25182-easter-egg-orange
 
-        green_egg: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlmOTczZTc4NTU5ZTE2ODE0OWRjMDQzNjI2MzIzMDQzMzg4YjkzMzVhN2Q1ODUyYzZiZDE0YmM2ZWU0MTkxIn19fQ=="
-                    # ^ https://minecraft-heads.com/custom-heads/head/15462-easter-egg ^
-    # X;Y;Z;World;Texture;EggName
+        lime_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDdmODUxOWNjNWE2MjQzZDg1ODk0OWE2YzU3MzlkY2U4NWE3NjE5YWQwZTcxYzUzNzAxYzgwZDQ3NjA0NmEwMCJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/25181-easter-egg-lime
+
+        green_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlmOTczZTc4NTU5ZTE2ODE0OWRjMDQzNjI2MzIzMDQzMzg4YjkzMzVhN2Q1ODUyYzZiZDE0YmM2ZWU0MTkxIn19fQ==
+        # ^ https://minecraft-heads.com/custom-heads/head/15462-easter-egg
+
+        pure_green: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzhhYjVjYjYxYzg1NjMxYWVhNzMwZjFlMGM1ZWIxNDI2N2I5OTY2MDQ4YjRkYWMyMTI3ZWVjMTQ1NzQyNGY5NSJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/28050-easter-egg-green
+
+        pure_blue: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTkwYWExMzJiYzM3YzY1ZTY2NGFlMDMzNmUzNzYzMDRlZmFhNGQ0NTk0YjY3OGQ0ODkxYjMxOTZmOTRhMTRiZSJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/28051-easter-egg-blue
+
+        pink_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM3ZGYyM2EzN2E5ZGRmY2QzMTMxOGJmOWU4OGJhMjVhZGJkNjUyYjdhNjExZmE2NzFkYmJjOGM5MzFlNTVhIn19fQ==
+        # ^ https://minecraft-heads.com/custom-heads/head/4660-easter-egg-pink
+
+        brown_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTA2OWM1ZGIzMDI0ZGRmYzU2N2ZiZGI3Y2RlZjJmMTQ4MWRhMmNhYWNlZWYxNjM4MWU4OGJhNGU4NmIwYzBlZiJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/4079-easter-egg-orange
+
+        white_egg: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGViNWFiYjEyMzUyN2E3YTFmNWM5NTg5NzE1OTY0YjU5Zjc2ODI0OTI2ZDNiOTgyZmE4NDExZDQ2MDZjNzkifX19
+        # ^ https://minecraft-heads.com/custom-heads/head/723-easter-egg-white
+
+        id_44344: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWNlZGRjMjNmOWQ5NmJhYWEwZDJkN2I5ZWMxODBjZDdiZWE1NDQ3ZDM5YzQyNWNhOWU0NGQ4ODA4ZWExMWVhMCJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/44344-easter-egg-pink
+
+        id_60084: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODYyMWE1MjY5ODY5ODQ3NTMxMDE1NjYzMDBhMzU2YjVmMzBkNjk3NWExZWZlNjI5YWJmMjY5NDc2NWQ5NmNjIn19fQ==
+        # ^ https://minecraft-heads.com/custom-heads/head/60084-easter-egg-dog-toy
+
+        id_78769: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGYzZjRkM2EyZjQ4NDY2OTE4ZmEwNWNkNjBjOTgzMGNjMThmYzc0MzkwY2ZhZWFhZDFhMTE3Nzg2YWJhOTBjZCJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/78769-easter-egg-magenta
+
+        id_43388: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkMDM3NDUyMjIzYmRhMTM4MWExN2MzZGFhZmE3MWJhYWM2ZWQ4YWEzYTcxYWUzNjE2M2NmZWI2MTIyN2I0NyJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/43388-easter-egg-yellow
+
+        id_28038: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWI0YWZiMDExMzUzYWZjNDUyNzI5NWNiMjMxNzhlMTViZTExM2I0ZWJhMTU5OGM0MGExNzRmZWVlZTc3OWYwNiJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/28038-easter-egg-yellow
+
+        id_43279: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDFkZjI5MTQ2MDY3Nzg1ZmIwZjRhNzY2MDQ0Y2E2NjkzYmQ5ZDI0Yzg2OWYxMmUzNDQwNmU5NWY3YzM4ZGVlNyJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/43279-easter-egg
+
+        id_43004: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWUzYTAyMzhiZjEyMDNhZmE4NGY1MjNmZGYxNTc2M2NmZjBlMzdlYWQwYjMxODA3OGRhYjkwZjkzNGUyYzU4ZSJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/43004-legendary-spooky-egg
+
+        id_725: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjY0NDMwZTQ5M2ZlYjVlYWExNDU1ODJlNTRlNzYxYTg2MDNmYjE2Y2MwZmYxMjY4YTVkMWU4NjRlNmY0NzlmNiJ9fX0=
+        # ^ https://minecraft-heads.com/custom-heads/head/725-easter-egg-white
+
+        mar_28031: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQxMmFmNjhlZGMzZWFkN2UzYWE5OWU5MjM4MTY2MzU5ZmVlNjE4OTA0ZWNlY2ZhYzNhYWJlNGIyNzc1M2VkMyJ9fX0=
+        mar_28030: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2YxYzI1YmY2MWEyYmJjN2E5OTU4ZTliOWRiYzlmZjdlMDg3N2M2MjJlNDdmYmNkNTUzNmU5YmUzZDAxMWIzMyJ9fX0=
+        mar_28029: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjIzZmNiMTU2ZTQ1ZmViNGM3NzU5MjZiZWQ4MjMwZjhkNjUwYzdiZmJjMzQ2MGQwYmI2ZWExMDhiYjFjZWQ5ZCJ9fX0=
+        mar_28028: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmNiZWQ4YTgzMzU4NTQ0MDMyYzMxNGIzODFlYmJiMWVjNGY0MGZiNTI3M2Y0NWUxNTZhZWM3YjJjMDdlZGZkZCJ9fX0=
+        mar_28027: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODBiOGVmNTJmYjdkNWZjMDE2ODJlNmYxYjAyNGUwY2MxYjc2YzJhZTQxYzk2YTdlNTRlNWZmNWE1MTU4NjlkYyJ9fX0=
+        mar_28026: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVkYTYwZjcwZWU0ZjkzZTQxYjFkNGY1ODU5NTg2ZGFlMTE5MTliOWJlZDE4MTdkNWIxZDhjOTJlYTNmNDMzMiJ9fX0=
+        mar_28025: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmQ1NWQ3Nzc0ZDFhN2Q2ZWQ0NTU2MDQxZTk2YmVhODIwYjI1ZGQ4ZjEzZmM1YTNlODI1NzYxZDBjMWZhNzZiYSJ9fX0=
+        mar_28024: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWI5ZTZlMzRiNWI2MGZkNTNkNTdmZGE5OTgwZDdlOTk3YjUwNDY0Y2IxZjUxZGJjMzU3YTM3MmYzNjc2NTAzIn19fQ==
+        mar_28023: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTg0ZTc2ZGM4NzMzZjk2YTg0NjhkMzhmNzNhNWY3NzA4OTZkNWExMjljY2E4YzI5ZWZlOTkxOTdjYjY2NmFmMiJ9fX0=
+        mar_28022: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmRlMGE1MGIyYzA3NjVmMDY4NjhmNjBjYWNlYzNmMmNhYWNkY2RkODU1NGI0Y2FkYjlkNjQ2NDAyNzVkNzE5NiJ9fX0=
+        mar_28021: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTBjZDc5NWViOTRlYmJlNDA1ZTZhNjAwYWVlOTVmZmZhZmMyYjhjNzQ0ODY1MGMwYmFhOTdmYzcwMjFjMzU0NCJ9fX0=
+        mar_28020: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdmMGRjOThkZTRiZDIzMWVlODM0OGQ3NzdkMjkxYjdhNGEyYWQ5ZGY0MWJiMzllZGNmODcwYTllM2ZhYzZlNCJ9fX0=
+        mar_28019: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2U4MzBlODEzMDBmZWYyMjdhYTI5ZWUwOGY2YjhkMDQ3YmE1ZTg0MTI4ZTJkMGQ1Njc4YmFhZWNkYjllOWRhNyJ9fX0=
+        mar_28050: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzhhYjVjYjYxYzg1NjMxYWVhNzMwZjFlMGM1ZWIxNDI2N2I5OTY2MDQ4YjRkYWMyMTI3ZWVjMTQ1NzQyNGY5NSJ9fX0=
+        mar_4768: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTM5NjQyNWIyNjc3NDFkZGU0YTNhYzQ4OTBiN2Y5NWE4YjI5ODJkYTlmNGE5NWE2ZWE0ZDU1NjFkOTczNyJ9fX0=
+        mar_4767: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmMyMzNlOTI3ZWNmNjE4ZWE4YWY4NTI0ZjU4Mzk3NWFjOWM4NmQ1ZThkNzFlZTdmZTM4MzQzMTY0Y2I2In19fQ==
+        mar_716: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDY0MmFmYTM5Njg1M2I4MWIxN2JlZjVjOGQ3YTQ0YzEyZGU2ODlhNTZhZjQ3NDg0NjY3OTgzOTlkYTNjZmVhZSJ9fX0=
+
     locations: []
 

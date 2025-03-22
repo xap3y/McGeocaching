@@ -7,10 +7,12 @@ import eu.xap3y.egghunt.manager.ConfigManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.annotations.Command;
+import org.incendo.cloud.annotations.Permission;
 
 public class DevCommand {
 
     @Command("egghunt catalog")
+    @Permission(value = {"egghunt.*", "egghunt.catalog"}, mode = Permission.Mode.ANY_OF)
     private void openCatalog(
             CommandSender p0
     ) {
@@ -20,10 +22,10 @@ public class DevCommand {
             return;
         }
 
-        /*
+
         EggStorageDto storage = ConfigManager.getEggStorageDto();
 
-        for (EggDto eggDto : storage.getEggs()) {
+        for (EggDto eggDto : storage.getEggs().values()) {
             EggHunt.getTexter().response(player, "&7- &e" + eggDto.name() + " &7(" + eggDto.animation() + ")");
             for (String texture : eggDto.textures()) {
                 EggHunt.getTexter().response(player, "&7TEXTURE- &e" + texture);
@@ -31,6 +33,6 @@ public class DevCommand {
             for (String reward : eggDto.rewards()) {
                 EggHunt.getTexter().response(player, "&7REWARD- &e" + reward);
             }
-        }*/
+        }
     }
 }

@@ -2,13 +2,16 @@ package eu.xap3y.egghunt.manager;
 
 import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.dto.EggDto;
+import eu.xap3y.egghunt.api.dto.EggHuntConfigDto;
 import eu.xap3y.egghunt.api.dto.EggLocationDto;
 import eu.xap3y.egghunt.api.dto.EggStorageDto;
 import eu.xap3y.egghunt.service.Texter;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -20,7 +23,10 @@ import java.util.Set;
 public class ConfigManager {
 
     @Getter
-    private static EggStorageDto eggStorageDto;
+    private static EggStorageDto eggStorageDto = new EggStorageDto();
+
+    @Getter
+    private static EggHuntConfigDto eggHuntConfig;
 
     private static YamlConfiguration yamlConfiguration;
 
@@ -37,15 +43,27 @@ public class ConfigManager {
         EggHunt.getInstance().saveDefaultConfig();
         EggHunt.getInstance().reloadConfig();
 
-        String prefix = EggHunt.getInstance().getConfig().getString("prefix");
+        FileConfiguration cfg = EggHunt.getInstance().getConfig();
+
+        String prefix = cfg.getString("prefix");
         if (prefix == null) prefix = "&7[&bEggHunt&7] &r";
         EggHunt.setTexter(new Texter(prefix, false, null));
+
+        eggHuntConfig = new EggHuntConfigDto(
+                cfg.getBoolean("enabled", true),
+                cfg.getBoolean("all_eggs_found_reward", false),
+                cfg.getBoolean("all_eggs_found_random_reward", false),
+                cfg.getStringList("all_eggs_found_rewards"),
+                cfg.getString("all_eggs_found_message", "")
+        );
     }
 
     @SneakyThrows
     public static void reloadStorage() {
         if (!file.exists()) {
-            file.createNewFile();
+            EggHunt.getInstance().saveResource("storage.yml", false);
+            Bukkit.getScheduler().runTaskLater(EggHunt.getInstance(), ConfigManager::reloadStorage, 40L);
+            return;
         }
 
         if (!playerStorageFile.exists()) {
@@ -70,11 +88,14 @@ public class ConfigManager {
 
         getEggStorageDto().setTextures(eggTextures);
 
-        for (Map.Entry<String, String> texture : eggTextures.entrySet()) {
-            EggHunt.getTexter().console("&7- &e" + texture.getKey() + " &7(" + texture.getValue() + ")");
+        if (EggHunt.getInstance().getConfig().getBoolean("debug", false)) {
+            for (Map.Entry<String, String> texture : eggTextures.entrySet()) {
+                EggHunt.getTexter().console("&7- &e" + texture.getKey() + " &7(" + texture.getValue() + ")");
+            }
         }
 
-        final List<Map<?, ?>> eggs = yamlConfiguration.getMapList("egg-hunt.eggs.list");
+
+        final List<Map<?, ?>> eggs = yamlConfiguration.getMapList("egg-hunt.list");
 
         eggStorageDto.getEggs().clear();
 
