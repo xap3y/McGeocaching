@@ -8,7 +8,7 @@ egg-hunt:
           random-reward: false
           rewards:
               - give %player% diamond 1
-              - me &a%player% found the first egg!
+              - me &a%player% nasel vejce z kategorie 1!
           animation: spiral
           textures:
               - 'R:.*'
@@ -17,7 +17,7 @@ egg-hunt:
           random-reward: false
           rewards:
               - give %player% emerald 1
-              - me &a%player% nasel vejce 2!
+              - me &a%player% nasel vejce z kategorie 2!
           animation: reveal
           textures:
               - yellow_egg
@@ -32,7 +32,7 @@ egg-hunt:
           random-reward: false
           rewards:
               - give %player% emerald 1
-              - me &a%player% nasel vejce 3!
+              - me &a%player% nasel vejce z kategorie 3!
           animation: reveal
           textures:
               - 'R:^mar_.*'
@@ -112,5 +112,8 @@ egg-hunt:
         mar_4767: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmMyMzNlOTI3ZWNmNjE4ZWE4YWY4NTI0ZjU4Mzk3NWFjOWM4NmQ1ZThkNzFlZTdmZTM4MzQzMTY0Y2I2In19fQ==
         mar_716: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDY0MmFmYTM5Njg1M2I4MWIxN2JlZjVjOGQ3YTQ0YzEyZGU2ODlhNTZhZjQ3NDg0NjY3OTgzOTlkYTNjZmVhZSJ9fX0=
 
+    locations: []
+
+treasures:
     locations: []
 

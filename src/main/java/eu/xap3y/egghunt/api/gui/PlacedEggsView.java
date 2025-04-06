@@ -73,7 +73,7 @@ public class PlacedEggsView extends VirtualMenu<String> {
                         } else if (click == ClickType.SHIFT_LEFT) {
                             BlockFace blockFace = eggLoc.loc().getBlock().getFace(player.getLocation().getBlock());
                             eggLocationDtoList.remove(eggLoc);
-                            ConfigManager.removeEggLocation(ConfigManager.compileLocation(eggLoc));
+                            ConfigManager.removeEggLocation(ConfigManager.compileEggLocation(eggLoc));
                             eggLoc.loc().getBlock().setType(Material.AIR);
                             Util.eggDeletionMessage(player, eggLoc, blockFace);
                             player.playSound(player, Sound.BLOCK_BONE_BLOCK_BREAK, .5f, 1f);

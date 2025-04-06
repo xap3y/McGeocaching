@@ -1,11 +1,14 @@
 package eu.xap3y.egghunt.command;
 
 import eu.xap3y.egghunt.EggHunt;
+import eu.xap3y.egghunt.api.dto.TreasureDto;
 import eu.xap3y.egghunt.api.enums.GuiType;
+import eu.xap3y.egghunt.api.gui.GeoCaching;
 import eu.xap3y.egghunt.manager.ConfigManager;
 import eu.xap3y.egghunt.util.ConfigDb;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.incendo.cloud.annotations.Argument;
 import org.incendo.cloud.annotations.Command;
 import org.incendo.cloud.annotations.Permission;
 
@@ -41,5 +44,38 @@ public class RootCommand {
         ConfigManager.reloadConfig();
         ConfigManager.reloadStorage();
         EggHunt.getTexter().response(p0, "&aPlugin byl reloadnut");
+    }
+
+    @Command("geocaching")
+    @Permission(value = {"geocaching.*", "geocaching.help"}, mode = Permission.Mode.ANY_OF)
+    private void openGeoCaching(
+            CommandSender p0
+    ) {
+
+        if (!(p0 instanceof Player player)) {
+            EggHunt.getTexter().response(p0, ConfigDb.getOnlyPlayers());
+            return;
+        }
+
+        new GeoCaching().build(false).open(player);
+    }
+
+    @Command("geocaching create [name]")
+    @Permission(value = {"geocaching.*", "geocaching.create"}, mode = Permission.Mode.ANY_OF)
+    private void createGeoCaching(
+            @Argument("name") String name,
+            CommandSender p0
+    ) {
+        if (!(p0 instanceof Player player)) {
+            EggHunt.getTexter().response(p0, ConfigDb.getOnlyPlayers());
+            return;
+        }
+
+        if (name == null) {
+            EggHunt.getTexter().response(p0, "&cšpatné použití! &7/geocaching create <name>");
+            return;
+        }
+
+        ConfigManager.saveTreasureLocation(new TreasureDto(player.getLocation(), name));
     }
 }

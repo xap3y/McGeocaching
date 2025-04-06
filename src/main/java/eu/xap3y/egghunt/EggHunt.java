@@ -9,8 +9,10 @@ import eu.xap3y.egghunt.command.DevCommand;
 import eu.xap3y.egghunt.command.RootCommand;
 import eu.xap3y.egghunt.listener.BlockListener;
 import eu.xap3y.egghunt.listener.PlayerListener;
+import eu.xap3y.egghunt.listener.PlayerMoveListener;
 import eu.xap3y.egghunt.manager.CommandManager;
 import eu.xap3y.egghunt.manager.ConfigManager;
+import eu.xap3y.egghunt.service.BeepService;
 import eu.xap3y.egghunt.service.ParticleService;
 import eu.xap3y.egghunt.service.Texter;
 import eu.xap3y.xagui.GuiRegistry;
@@ -46,6 +48,9 @@ public final class EggHunt extends JavaPlugin {
 
     @Getter
     private static final ParticleService particleService = new ParticleService();
+
+    @Getter
+    private static final BeepService beepService = new BeepService();
 
     @Override
     public void onEnable() {
@@ -89,13 +94,15 @@ public final class EggHunt extends JavaPlugin {
 
         // Get current mc version as x.x.x
         particleService.init();
+        beepService.init();
     }
 
     private static void registerListeners(PluginManager manager) {
         //  Registering listeners  \\
         Listener[] listeners = new Listener[]{
             new BlockListener(),
-            new PlayerListener()
+            new PlayerListener(),
+            new PlayerMoveListener()
         };
 
         for (Listener listener : listeners) {

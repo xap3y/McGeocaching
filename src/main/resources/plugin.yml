@@ -4,14 +4,8 @@ main: eu.xap3y.egghunt.EggHunt
 api-version: '1.20'
 authors: [ XAP3Y ]
 description: EggHunt
-website: https://xap3y.tech
+website: https://minecore.cz
 
-softdepend: [ PlaceholderAPI ]
-#depend: [ NBTAPI, WorldGuard ]
-#loadbefore: [OnePlugin, AnotherPlugin]
-
-#load: POSTWORLD | STARTUP
-#prefix: Example
-
+#softdepend: [ PlaceholderAPI ]
 
 

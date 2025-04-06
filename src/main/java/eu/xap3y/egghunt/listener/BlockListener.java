@@ -68,7 +68,7 @@ public class BlockListener implements Listener {
                 return;
             }
             ConfigManager.getEggStorageDto().getLocations().remove(eggLocDto);
-            ConfigManager.removeEggLocation(ConfigManager.compileLocation(eggLocDto));
+            ConfigManager.removeEggLocation(ConfigManager.compileEggLocation(eggLocDto));
             eggLocDto.loc().getBlock().setType(Material.AIR);
             event.getPlayer().playSound(event.getPlayer(), Sound.BLOCK_DECORATED_POT_BREAK, 1f, 1.0f);
             EggHunt.getTexter().response(event.getPlayer(), "&cVejce odebráno!");
@@ -109,7 +109,7 @@ public class BlockListener implements Listener {
         BlockFace blockFace = event.getBlock().getFace(event.getPlayer().getLocation().getBlock());
 
         ConfigManager.getEggStorageDto().getLocations().remove(eggLocDto);
-        ConfigManager.removeEggLocation(ConfigManager.compileLocation(eggLocDto));
+        ConfigManager.removeEggLocation(ConfigManager.compileEggLocation(eggLocDto));
         //EggHunt.getTexter().response(event.getPlayer(), "&aVejce odstraněno! &7(" + ConfigManager.getEggStorageDto().getLocations().size() + ")");
         event.setDropItems(false);
 

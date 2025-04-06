@@ -22,7 +22,6 @@ public class DevCommand {
             return;
         }
 
-
         EggStorageDto storage = ConfigManager.getEggStorageDto();
 
         for (EggDto eggDto : storage.getEggs().values()) {

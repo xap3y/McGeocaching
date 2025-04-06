@@ -50,7 +50,7 @@ public class PlayerListener implements Listener {
         }
 
         List<String> locs = ConfigManager.getPlayerEggsFounded(event.getPlayer().getUniqueId().toString());
-        String compiledLoc = ConfigManager.compileLocation(egg);
+        String compiledLoc = ConfigManager.compileEggLocation(egg);
         if (locs.contains(compiledLoc)) {
             EggHunt.getTexter().response(event.getPlayer(), "&cToto vejce jsi již našel!");
             return;
