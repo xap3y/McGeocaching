@@ -4,7 +4,6 @@ import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.enums.EggAnimationType;
 import eu.xap3y.egghunt.api.iface.EggAnimation;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

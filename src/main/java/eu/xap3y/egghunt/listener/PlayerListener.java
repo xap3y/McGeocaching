@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class PlayerListener implements Listener {
         if (egg == null) return;
         event.setCancelled(true);
 
-        if (!ConfigManager.getEggHuntConfig().enabled()) {
+        if (!ConfigManager.getEggHuntConfig().getEnabled()) {
             EggHunt.getTexter().response(event.getPlayer(), "&cEggHunt je vypnutý!");
             return;
         }
@@ -69,6 +70,28 @@ public class PlayerListener implements Listener {
             ConfigDb.getAnimations().get(animation).start(blockLoc.clone().add(0.5, 0.5, 0.5), event.getPlayer());
         }
 
+        List<String> animationPool = eggDto.animationPool();
+
+        if (animationPool != null && !animationPool.isEmpty()) {
+
+            List<String> animationPoolFiltered = new ArrayList<>();
+            for (String temp : animationPool) {
+                if (temp.equalsIgnoreCase("ALL")) {
+                    animationPoolFiltered.clear();
+                    for (EggAnimationType anim : EggAnimationType.values()) {
+                        animationPoolFiltered.add(anim.name().toLowerCase());
+                    }
+                    break;
+                } else {
+                    animationPoolFiltered.add(temp);
+                }
+            }
+
+            String randomAnimation = animationPoolFiltered.get(new Random().nextInt(animationPoolFiltered.size()));
+            EggAnimationType animationType = EggAnimationType.fromString(randomAnimation);
+            ConfigDb.getAnimations().get(animationType).start(blockLoc.clone().add(0.5, 0.5, 0.5), event.getPlayer());
+        }
+
         List<String> rewardCommands = eggDto.rewards();
 
         if (eggDto.randomReward()) {
@@ -87,17 +110,17 @@ public class PlayerListener implements Listener {
 
         event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 1f, 1f);
 
-        String allEggsFoundMessage = ConfigManager.getEggHuntConfig().allEggsFoundMessage();
+        String allEggsFoundMessage = ConfigManager.getEggHuntConfig().getAllEggsFoundMessage();
 
         if (allEggsFoundMessage != null && allEggsFoundMessage.length() > 1) {
             EggHunt.getTexter().response(event.getPlayer(), allEggsFoundMessage);
         }
 
-        if (!ConfigManager.getEggHuntConfig().allEggsFoundReward()) {
+        if (!ConfigManager.getEggHuntConfig().getAllEggsFoundReward()) {
             return;
         }
 
-        List<String> rewards = ConfigManager.getEggHuntConfig().allEggsFoundRewards();
+        List<String> rewards = ConfigManager.getEggHuntConfig().getAllEggsFoundRewards();
 
         if (rewards == null || rewards.isEmpty()) {
             return;
@@ -105,12 +128,17 @@ public class PlayerListener implements Listener {
 
         List<String> allEggsFoundRewardCommands = new ArrayList<>();
 
-        if (ConfigManager.getEggHuntConfig().allEggsFoundRandomReward()) {
+        if (ConfigManager.getEggHuntConfig().getAllEggsFoundRandomReward()) {
             allEggsFoundRewardCommands.add(rewards.get(new Random().nextInt(rewards.size())));
         } else {
             allEggsFoundRewardCommands.addAll(rewards);
         }
 
         Util.executeRewardCommands(allEggsFoundRewardCommands, event.getPlayer().getName());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        EggHunt.getBeepService().getNearbyPlayers().remove(event.getPlayer());
     }
 }

@@ -1,17 +1,10 @@
 package eu.xap3y.egghunt.api.animations;
 
-import com.github.fierioziy.particlenativeapi.api.particle.type.ParticleTypeMotion;
 import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.enums.EggAnimationType;
 import eu.xap3y.egghunt.api.iface.EggAnimation;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RevealEggAnimation implements EggAnimation {
 

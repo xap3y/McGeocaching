@@ -28,7 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class EggHunt extends JavaPlugin {
 
     @Getter
-    private static String version = "@VERSION@";
+    private final static String version = "@VERSION@";
 
     @Getter
     private static EggHunt instance;
@@ -71,6 +71,7 @@ public final class EggHunt extends JavaPlugin {
 
         virtualGuiRegistry.register(GuiType.MAIN, new MainGui(), Boolean.class);
         virtualGuiRegistry.register(GuiType.EGG_HUNT, new eu.xap3y.egghunt.api.gui.EggHunt(), Boolean.class);
+        virtualGuiRegistry.register(GuiType.GEOCACHE, new eu.xap3y.egghunt.api.gui.GeoCaching(), Boolean.class);
         /*virtualGuiRegistry.register(GuiType.EGG_VIEW, new eu.xap3y.egghunt.api.gui.EggView(), EggDto.class);*/
 
         ConfigManager.reloadConfig();

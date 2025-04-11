@@ -19,6 +19,8 @@ public class ParticleService {
 
     public void init() {
 
+        if (!ConfigManager.getEggHuntConfig().getEnabled()) return;
+
         Location[] locTemp = ConfigManager.getEggStorageDto().getLocations().stream()
                 .map(EggLocationDto::loc)
                 .toArray(Location[]::new);
@@ -67,6 +69,7 @@ public class ParticleService {
     }
 
     public void destroy() {
+        if (task == null || playerFetcher == null) return;
         task.cancel();
         playerFetcher.cancel();
         playerFetcher = null;

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public class MainGui extends VirtualMenu<Boolean> {
 
     public MainGui() {
-        super("&b&lGeocaching", 5, EggHunt.getXagui());
+        super("&a&lGeocaching", 5, EggHunt.getXagui());
     }
 
 
@@ -30,11 +30,18 @@ public class MainGui extends VirtualMenu<Boolean> {
                 .setLore(" ", "&eKlikni pro zobrazení")
                 .withListener((e) -> {
                     Player player = (Player) e.getWhoClicked();
-                    player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, .8f, 1.0f);
+                    player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, .8f, 1.0f);
                     EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_HUNT, player, null, Boolean.class);
                 });
 
-        GuiButtonInterface unknown = new GuiButton(HeadType.UNKNOWN.getHead()).setName("&7Geocaching").withClickSound(Sound.ENTITY_VILLAGER_NO);
+        GuiButtonInterface unknown = new GuiButton(HeadType.GEOCACHING.getHead())
+                .setName("&bGeocaching")
+                .setLore(" ", "&eKlikni pro zobrazení")
+                .withListener((e) -> {
+                    Player player = (Player) e.getWhoClicked();
+                    player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, .8f, 1.0f);
+                    EggHunt.getVirtualGuiRegistry().invoke(GuiType.GEOCACHE, player, null, Boolean.class);
+                });
 
         gui.setSlot(21, eggHunt);
         gui.setSlot(23, unknown);

@@ -23,7 +23,7 @@ import java.util.List;
 public class PlacedEggsView extends VirtualMenu<String> {
 
     public PlacedEggsView() {
-        super("Placed eggs", 6, 1, eu.xap3y.egghunt.EggHunt.getXagui());
+        super("&3Položená vajíčka", 6, 1, eu.xap3y.egghunt.EggHunt.getXagui());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PlacedEggsView extends VirtualMenu<String> {
         for (EggLocationDto eggLoc : eggLocationDtoList) {
             GuiButton guiButton = new GuiButton(Util.getTexturedSkull(ConfigManager.getEggStorageDto().getTextures().get(eggLoc.texture())))
                     .setAmount(j)
-                    .setName("&6" + eggLoc.eggType() + " &7(&e" + k + "&7)")
+                    .setName("&6" + eggLoc.eggType() + " &7(&e#" + k + "&7)")
                     .setLore(
                             " ",
                             " &3➥ &fWorld: &e" + eggLoc.loc().getWorld().getName(),

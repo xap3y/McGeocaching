@@ -83,13 +83,18 @@ public class EggView extends VirtualMenu<EggDto> {
         gui.fillBorder();
         gui.addCloseButtonAllPages();
 
+        List<String> animationPool = eggDto.animationPool();
+
         GuiButton mainIcon = new GuiButton(Material.BOOKSHELF)
                 .setName("&6" + eggDto.name())
                 .setLore(
                         " ",
                         " &3➥ &fPočet variant: &e" + textures.size(),
                         " &3➥ &fPočet odměn: &e" + eggDto.rewards().size(),
-                        " &3➥ &fAnimace: &e" + eggDto.animation(),
+                        (animationPool != null && !animationPool.isEmpty()) ?
+                                " &3➥ &fAnimace: &ePOOL(&f" + String.join(", ", animationPool) + "&e)"
+                                :
+                                " &3➥ &fAnimace: &e" + eggDto.animation(),
                         " &3➥ &fNáhodná odměna: &e" + (eggDto.randomReward() ? "&aZapnuto" : "&cVypnuto")
                 );
 

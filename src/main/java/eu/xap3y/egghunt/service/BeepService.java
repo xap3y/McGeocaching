@@ -4,7 +4,6 @@ import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.dto.TreasureDto;
 import eu.xap3y.egghunt.manager.ConfigManager;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,8 +13,6 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.CompassMeta;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
@@ -26,17 +23,19 @@ public class BeepService {
     private BukkitTask task;
 
     @Getter
-    private static Set<Player> nearbyPlayers = new HashSet<Player>();
+    private Set<Player> nearbyPlayers = new HashSet<Player>();
 
     @Getter
-    private static Map<UUID, BossBar> bossBarMapper = new ConcurrentHashMap<UUID, BossBar>();
+    private Map<UUID, BossBar> bossBarMapper = new ConcurrentHashMap<UUID, BossBar>();
 
     public void init() {
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(EggHunt.getInstance(), () -> {
+            if (!ConfigManager.getGeocachingConfig().getEnabled()) return;
             for (Player player : nearbyPlayers) {
                 if (!player.isOnline() || player.getInventory().getItemInMainHand().getType() != Material.COMPASS) {
                     nearbyPlayers.remove(player);
                     // Remove bossbar
+                    if (bossBarMapper.get(player.getUniqueId()) == null) continue;
                     bossBarMapper.get(player.getUniqueId()).setVisible(false);
                     bossBarMapper.get(player.getUniqueId()).removeAll();
                     bossBarMapper.remove(player.getUniqueId());
@@ -45,13 +44,23 @@ public class BeepService {
 
                 TreasureDto closestTreasure = getClosestTreasure(player.getLocation());
 
-                if (closestTreasure == null) {
+                double distance = 900.0;
+
+                if (closestTreasure != null) {
+                    distance = player.getLocation().distance(closestTreasure.location());
+                }
+
+                if (closestTreasure == null || distance > ConfigManager.getGeocachingConfig().getMinDistance()) {
+                    if (bossBarMapper.get(player.getUniqueId()) != null) {
+                        bossBarMapper.get(player.getUniqueId()).setVisible(false);
+                        bossBarMapper.get(player.getUniqueId()).removeAll();
+                        bossBarMapper.remove(player.getUniqueId());
+                    }
                     continue;
                 }
 
                 player.setCompassTarget(closestTreasure.location());
 
-                double distance = player.getLocation().distance(closestTreasure.location());
                 if (EggHunt.getInstance().getConfig().getBoolean("debug", false)) EggHunt.getTexter().response(player, "[DEBUG] Distance: " + distance);
                 //player.sendActionBar(Component.text("§ePoklad v blizkosti: §c" + String.format("%.1f", distance) + " bloků"));
 
@@ -113,6 +122,9 @@ public class BeepService {
 
                 final BossBar bar = bossBarMapper.get(player.getUniqueId());
 
+                double fill = 1 - (distance / 100);
+                if (fill < 0) fill = 0;
+
                 if (bar == null) {
                     final BossBar bossBar = Bukkit.createBossBar(
                             Texter.colored("&ePoklad v blízkosti"),
@@ -121,13 +133,13 @@ public class BeepService {
                             BarFlag.DARKEN_SKY
                     );
 
-                    bossBar.setProgress(1 - (distance / 100));
+                    bossBar.setProgress(fill);
                     bossBar.addPlayer(player);
                     bossBar.setVisible(true);
                     bossBarMapper.put(player.getUniqueId(), bossBar);
                 } else {
                     bar.setColor(barColor);
-                    bar.setProgress(1 - (distance / 100));
+                    bar.setProgress(fill);
                 }
 
                 player.playSound(player, sound, 1.0f, pitch);
@@ -152,7 +164,20 @@ public class BeepService {
         init();
     }
 
+    public void cleanUp() {
+        if (bossBarMapper != null) {
+            bossBarMapper.forEach((e, a) -> {
+                a.setVisible(false);
+                a.removeAll();
+            });
+            bossBarMapper.clear();
+        }
+        nearbyPlayers.clear();
+    }
+
     public void destroy() {
+        if (task == null) return;
+        cleanUp();
         task.cancel();
         task = null;
     }

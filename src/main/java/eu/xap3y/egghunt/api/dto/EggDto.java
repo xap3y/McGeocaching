@@ -7,6 +7,7 @@ public record EggDto(
         String animation,
         Boolean randomReward,
         List<String> rewards,
-        List<String> textures
+        List<String> textures,
+        List<String> animationPool
 ) {
 }

@@ -12,6 +12,10 @@ import org.incendo.cloud.annotations.Argument;
 import org.incendo.cloud.annotations.Command;
 import org.incendo.cloud.annotations.Permission;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
+
 public class RootCommand {
 
     @Command("egghunt")
@@ -32,7 +36,7 @@ public class RootCommand {
             return;
         }
 
-        EggHunt.getVirtualGuiRegistry().invoke(GuiType.MAIN, player, null, Boolean.class);
+        EggHunt.getVirtualGuiRegistry().invoke(GuiType.EGG_HUNT, player, null, Boolean.class);
     }
 
     @Command("egghunt reload")
@@ -76,6 +80,34 @@ public class RootCommand {
             return;
         }
 
+        if (ConfigManager.getTreasureDtoList().stream().anyMatch(treasureDto -> Objects.equals(treasureDto.name(), name))) {
+            EggHunt.getTexter().response(p0, "&cTreasure s tímto názvem již existuje");
+            return;
+        }
+
         ConfigManager.saveTreasureLocation(new TreasureDto(player.getLocation(), name));
+        EggHunt.getTexter().response(p0, "&aTreasure byl přidán");
+    }
+
+    @Command("geocaching delete [name]")
+    @Permission(value = {"geocaching.*", "geocaching.delete"}, mode = Permission.Mode.ANY_OF)
+    private void deleteGeoCaching(
+            @Argument("name") String name,
+            CommandSender p0
+    ) {
+        if (name == null) {
+            EggHunt.getTexter().response(p0, "&cšpatné použití! &7/geocaching delete <name>");
+            return;
+        }
+
+        Optional<TreasureDto> treasureDto = ConfigManager.getTreasureDtoList().stream().filter(tr -> Objects.equals(tr.name(), name)).findFirst();
+
+        if (treasureDto.isEmpty()) {
+            EggHunt.getTexter().response(p0, "&cTreasure s tímto názvem neexistuje");
+            return;
+        }
+
+        ConfigManager.removeTreasureLocation(treasureDto.get());
+        EggHunt.getTexter().response(p0, "&aTreasure byl smazám");
     }
 }

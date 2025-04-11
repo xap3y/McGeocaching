@@ -1,7 +1,6 @@
 package eu.xap3y.egghunt.util;
 
-import eu.xap3y.egghunt.api.animations.RevealEggAnimation;
-import eu.xap3y.egghunt.api.animations.SpiralEggAnimation;
+import eu.xap3y.egghunt.api.animations.*;
 import eu.xap3y.egghunt.api.enums.EggAnimationType;
 import eu.xap3y.egghunt.api.iface.EggAnimation;
 import lombok.Getter;
@@ -15,6 +14,9 @@ public class ConfigDb {
     private static final Map<EggAnimationType, EggAnimation> animations = new HashMap<EggAnimationType, EggAnimation>() {{
         put(EggAnimationType.SPIRAL, new SpiralEggAnimation());
         put(EggAnimationType.REVEAL, new RevealEggAnimation());
+        put(EggAnimationType.SPARKLE_SHELL, new SparkleShellEggAnimation());
+        put(EggAnimationType.MYST_TWIRL, new MystTwirlEggAnimation());
+        put(EggAnimationType.EGG_NOVA, new EggNovaEggAnimation());
     }};
 
     @Getter

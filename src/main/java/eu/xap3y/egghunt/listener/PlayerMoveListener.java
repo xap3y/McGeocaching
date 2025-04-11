@@ -1,7 +1,6 @@
 package eu.xap3y.egghunt.listener;
 
 import eu.xap3y.egghunt.EggHunt;
-import eu.xap3y.egghunt.service.BeepService;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class PlayerMoveListener implements Listener {
             return;
         }
 
-        BeepService.getNearbyPlayers().add(player);
+        EggHunt.getBeepService().getNearbyPlayers().add(player);
     }
 
 

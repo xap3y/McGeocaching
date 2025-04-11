@@ -2,7 +2,9 @@ package eu.xap3y.egghunt.manager;
 
 import eu.xap3y.egghunt.EggHunt;
 import eu.xap3y.egghunt.api.dto.*;
-import eu.xap3y.egghunt.service.BeepService;
+import eu.xap3y.egghunt.api.model.EggHuntConfig;
+import eu.xap3y.egghunt.api.model.GeocachingConfig;
+import eu.xap3y.egghunt.service.ParticleService;
 import eu.xap3y.egghunt.service.Texter;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -22,7 +24,10 @@ public class ConfigManager {
     private static EggStorageDto eggStorageDto = new EggStorageDto();
 
     @Getter
-    private static EggHuntConfigDto eggHuntConfig;
+    private static EggHuntConfig eggHuntConfig;
+
+    @Getter
+    private static GeocachingConfig geocachingConfig;
 
     private static YamlConfiguration yamlConfiguration;
 
@@ -45,20 +50,30 @@ public class ConfigManager {
         FileConfiguration cfg = EggHunt.getInstance().getConfig();
 
         String prefix = cfg.getString("prefix");
-        if (prefix == null) prefix = "&7[&bEggHunt&7] &r";
+        if (prefix == null) prefix = "&7[&bGeocaching&7] &r";
         EggHunt.setTexter(new Texter(prefix, false, null));
 
-        eggHuntConfig = new EggHuntConfigDto(
-                cfg.getBoolean("enabled", true),
-                cfg.getBoolean("all_eggs_found_reward", false),
-                cfg.getBoolean("all_eggs_found_random_reward", false),
-                cfg.getStringList("all_eggs_found_rewards"),
-                cfg.getString("all_eggs_found_message", "")
+        eggHuntConfig = new EggHuntConfig(
+                cfg.getBoolean("egghunt.enabled", true),
+                cfg.getBoolean("egghunt.all_eggs_found_reward", false),
+                cfg.getBoolean("egghunt.all_eggs_found_random_reward", false),
+                cfg.getStringList("egghunt.all_eggs_found_rewards"),
+                cfg.getString("egghunt.all_eggs_found_message", "")
         );
+
+        EggHunt.getParticleService().restart();
+
+        geocachingConfig = new GeocachingConfig(
+                cfg.getBoolean("geocaching.enabled", true),
+                cfg.getInt("geocaching.minimum_distance", 80)
+        );
+
+        EggHunt.getBeepService().cleanUp();
     }
 
     public static void removeTreasureLocation(TreasureDto treasureDto) {
         removeTreasureLocation(compileTreasureLocation(treasureDto));
+        treasureDtoList.remove(treasureDto);
     }
 
     public static void removeTreasureLocation(String loc) {
@@ -174,11 +189,12 @@ public class ConfigManager {
             for (Map<?, ?> egg : eggs) {
                 String name = (String) egg.get("name");
                 String animation = (String) egg.get("animation");
+                List<String> animationPool = (List<String>) egg.get("animation-pool");
                 Boolean randomReward = (Boolean) egg.get("random-reward");
                 List<String> textures = (List<String>) egg.get("textures");
                 List<String> rewards = (List<String>) egg.get("rewards");
 
-                EggDto eggDto = new EggDto(name, animation, randomReward, rewards, textures);
+                EggDto eggDto = new EggDto(name, animation, randomReward, rewards, textures, animationPool);
 
                 getEggStorageDto().getEggs().put(name, eggDto);
             }
